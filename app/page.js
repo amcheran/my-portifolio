@@ -95,7 +95,7 @@ export default function Home() {
     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
     Available for Software & IT Opportunities
   </div>
-// stopped here
+{/* code ends here*/}
           
           <div className="space-y-4">
             <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-white leading-tight">
