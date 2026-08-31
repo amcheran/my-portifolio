@@ -78,11 +78,23 @@ export default function Home() {
       <main className="max-w-4xl mx-auto px-6 py-12 space-y-20">
         
         {/* HERO SECTION */}
-        <section className="space-y-6 pt-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-medium">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            Available for Software & IT Opportunities
-          </div>
+        {/* HERO SECTION */}
+<section className="space-y-6 pt-4">
+  
+  {/* Add your profile picture right here */}
+  <div className="relative w-28 h-28 sm:w-32 sm:h-32">
+    <img 
+      src="/profile.png" 
+      alt="Cheran Muhone" 
+      className="w-full h-full rounded-full object-cover border-2 border-indigo-500/50 shadow-xl shadow-indigo-500/10"
+    />
+  </div>
+
+  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-medium">
+    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+    Available for Software & IT Opportunities
+  </div>
+// stopped here
           
           <div className="space-y-4">
             <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-white leading-tight">
