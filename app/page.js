@@ -84,7 +84,7 @@ export default function Home() {
   {/* Add your profile picture right here */}
   <div className="relative w-28 h-28 sm:w-32 sm:h-32">
     <img 
-      src="/profile.png" 
+      src="/backimage.png" 
       alt="Cheran Muhone" 
       className="w-full h-full rounded-full object-cover border-2 border-indigo-500/50 shadow-xl shadow-indigo-500/10"
     />
