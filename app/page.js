@@ -1,5 +1,5 @@
 import React from 'react';
-import profilePic from '../profile.png';
+import profilePic from '../backimage.png';
 
 const PORTFOLIO_DATA = {
   name: "Cheran Muhone",
@@ -85,7 +85,7 @@ export default function Home() {
   {/* Add your profile picture right here */}
   <div className="relative w-28 h-28 sm:w-32 sm:h-32">
     <img 
-      src="/backimage.png" 
+      src={profilePic.src}  
       alt="Cheran Muhone" 
       className="w-full h-full rounded-full object-cover border-2 border-indigo-500/50 shadow-xl shadow-indigo-500/10"
     />
