@@ -1,4 +1,5 @@
 import React from 'react';
+import profilePic from '../profile.png';
 
 const PORTFOLIO_DATA = {
   name: "Cheran Muhone",
