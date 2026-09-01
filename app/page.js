@@ -61,7 +61,7 @@ const PORTFOLIO_DATA = {
 
 export default function Home() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [status, setStatus] = useState(null); // null | 'loading' | 'success' | 'error'
+  const [status, setStatus] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -88,7 +88,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen font-sans selection:bg-indigo-500 selection:text-white">
-      {/* Top Navigation */}
+      {/* Navigation */}
       <nav className="sticky top-0 z-50 glass-card border-b border-slate-800/80 px-6 py-4">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <span className="font-extrabold text-xl tracking-tight bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">
@@ -109,9 +109,10 @@ export default function Home() {
         <section className="space-y-6 pt-4">
           <div className="relative w-28 h-28 sm:w-32 sm:h-32">
             <img 
-              src={profilePic.src} 
+              src="/profile.png" 
               alt={PORTFOLIO_DATA.name} 
               className="w-full h-full rounded-full object-cover border-2 border-indigo-500/50 shadow-xl shadow-indigo-500/10"
+              onError={(e) => { e.currentTarget.style.display = 'none'; }}
             />
           </div>
 
@@ -149,7 +150,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* FEATURED PROJECTS */}
+        {/* PROJECTS SECTION */}
         <section id="projects" className="space-y-8">
           <div className="flex items-center justify-between border-b border-slate-800 pb-4">
             <div>
@@ -188,7 +189,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* TECHNICAL ECOSYSTEM */}
+        {/* SKILLS SECTION */}
         <section id="skills" className="space-y-8">
           <div className="border-b border-slate-800 pb-4">
             <h2 className="text-2xl font-bold text-white">Technical Ecosystem</h2>
@@ -245,12 +246,12 @@ export default function Home() {
           </div>
         </section>
 
-        {/* INTERACTIVE CONTACT FORM & FOOTER */}
+        {/* CONTACT FORM */}
         <footer id="contact" className="glass-card rounded-2xl p-6 sm:p-8 space-y-6">
           <div className="text-center space-y-2">
             <h2 className="text-2xl font-bold text-white">Let's Connect</h2>
             <p className="text-sm text-slate-400 max-w-md mx-auto">
-              Send a direct message below—it saves to my database and sends an alert straight to my inbox!
+              Send a direct message below—it saves to my database and alerts my inbox!
             </p>
           </div>
 
@@ -301,12 +302,12 @@ export default function Home() {
 
             {status === 'success' && (
               <p className="text-xs text-emerald-400 text-center font-medium pt-2">
-                ✓ Message sent successfully! Check your inbox shortly.
+                ✓ Message sent successfully!
               </p>
             )}
             {status === 'error' && (
               <p className="text-xs text-rose-400 text-center font-medium pt-2">
-                Failed to send. Please check your Vercel & Supabase API key configuration.
+                Failed to send. Please check your environment configuration.
               </p>
             )}
           </form>
