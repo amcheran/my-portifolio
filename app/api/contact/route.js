@@ -22,7 +22,7 @@ export async function POST(request) {
     if (process.env.RESEND_API_KEY) {
       await resend.emails.send({
         from: 'Portfolio Contact <onboarding@resend.dev>',
-        to: 'YOUR_PERSONAL_EMAIL@gmail.com', // Replace with your personal email address
+        to: 'cheranmuhone362@gmail.com', // Replace with your personal email address
         subject: `New Portfolio Message from ${name}`,
         html: `
           <h2>New Contact Form Submission</h2>
