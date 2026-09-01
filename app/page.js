@@ -1,5 +1,7 @@
-import React from 'react';
-import profilePic from '../backimage.png';
+'use client';
+
+import React, { useState } from 'react';
+import profilePic from '../profile.png'; // Imports root image file
 
 const PORTFOLIO_DATA = {
   name: "Cheran Muhone",
@@ -59,9 +61,35 @@ const PORTFOLIO_DATA = {
 };
 
 export default function Home() {
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState(null); // null | 'loading' | 'success' | 'error'
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('loading');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setStatus('success');
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        setStatus('error');
+      }
+    } catch (err) {
+      console.error(err);
+      setStatus('error');
+    }
+  };
+
   return (
     <div className="min-h-screen font-sans selection:bg-indigo-500 selection:text-white">
-      {/* Top Navbar */}
+      {/* Top Navigation */}
       <nav className="sticky top-0 z-50 glass-card border-b border-slate-800/80 px-6 py-4">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <span className="font-extrabold text-xl tracking-tight bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">
@@ -79,23 +107,19 @@ export default function Home() {
       <main className="max-w-4xl mx-auto px-6 py-12 space-y-20">
         
         {/* HERO SECTION */}
-        {/* HERO SECTION */}
-<section className="space-y-6 pt-4">
-  
-  {/* Add your profile picture right here */}
-  <div className="relative w-28 h-28 sm:w-32 sm:h-32">
-    <img 
-      src={profilePic.src}  
-      alt="Cheran Muhone" 
-      className="w-full h-full rounded-full object-cover border-2 border-indigo-500/50 shadow-xl shadow-indigo-500/10"
-    />
-  </div>
+        <section className="space-y-6 pt-4">
+          <div className="relative w-28 h-28 sm:w-32 sm:h-32">
+            <img 
+              src={profilePic.src} 
+              alt={PORTFOLIO_DATA.name} 
+              className="w-full h-full rounded-full object-cover border-2 border-indigo-500/50 shadow-xl shadow-indigo-500/10"
+            />
+          </div>
 
-  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-medium">
-    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-    Available for Software & IT Opportunities
-  </div>
-{/* code ends here*/}
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-medium">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            Available for Software & IT Opportunities
+          </div>
           
           <div className="space-y-4">
             <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-white leading-tight">
@@ -126,7 +150,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* PROJECTS SECTION */}
+        {/* FEATURED PROJECTS */}
         <section id="projects" className="space-y-8">
           <div className="flex items-center justify-between border-b border-slate-800 pb-4">
             <div>
@@ -142,11 +166,9 @@ export default function Home() {
             {PORTFOLIO_DATA.projects.map((project, idx) => (
               <div key={idx} className="glass-card rounded-2xl p-6 flex flex-col justify-between space-y-4 group">
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-semibold text-indigo-400 tracking-wider uppercase">
-                      {project.tag}
-                    </span>
-                  </div>
+                  <span className="text-xs font-semibold text-indigo-400 tracking-wider uppercase">
+                    {project.tag}
+                  </span>
                   <h3 className="text-xl font-bold text-white group-hover:text-indigo-300 transition-colors">
                     {project.name}
                   </h3>
@@ -167,11 +189,11 @@ export default function Home() {
           </div>
         </section>
 
-        {/* SKILLS & STACK SECTION */}
+        {/* TECHNICAL ECOSYSTEM */}
         <section id="skills" className="space-y-8">
           <div className="border-b border-slate-800 pb-4">
             <h2 className="text-2xl font-bold text-white">Technical Ecosystem</h2>
-            <p className="text-sm text-slate-400">Languages, frameworks, and tools I use</p>
+            <p className="text-sm text-slate-400">Languages, frameworks, and operational platforms</p>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
@@ -186,7 +208,6 @@ export default function Home() {
 
         {/* EDUCATION & EXPERIENCE */}
         <section className="grid gap-8 sm:grid-cols-2">
-          {/* Education */}
           <div className="space-y-6">
             <h2 className="text-2xl font-bold text-white border-b border-slate-800 pb-4">
               Education
@@ -209,7 +230,6 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Operational Experience */}
           <div className="space-y-6">
             <h2 className="text-2xl font-bold text-white border-b border-slate-800 pb-4">
               Operational Experience
@@ -217,9 +237,7 @@ export default function Home() {
             <div className="space-y-4">
               {PORTFOLIO_DATA.experience.map((exp, idx) => (
                 <div key={idx} className="glass-card p-5 rounded-xl space-y-2">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-base font-bold text-slate-100">{exp.role}</h3>
-                  </div>
+                  <h3 className="text-base font-bold text-slate-100">{exp.role}</h3>
                   <p className="text-xs text-indigo-400">{exp.company}</p>
                   <p className="text-xs text-slate-400 leading-relaxed">{exp.highlights}</p>
                 </div>
@@ -228,14 +246,74 @@ export default function Home() {
           </div>
         </section>
 
-        {/* FOOTER / CONTACT */}
-        <footer id="contact" className="glass-card rounded-2xl p-8 text-center space-y-4">
-          <h2 className="text-2xl font-bold text-white">Let's Connect</h2>
-          <p className="text-sm text-slate-400 max-w-md mx-auto">
-            Open to software engineering internships, IT roles, technology startup collaborations, and business operations opportunities.
-          </p>
-          <div className="pt-2">
-            <span className="inline-block text-xs font-mono bg-slate-800 text-slate-300 px-4 py-2 rounded-lg border border-slate-700">
+        {/* INTERACTIVE CONTACT FORM & FOOTER */}
+        <footer id="contact" className="glass-card rounded-2xl p-6 sm:p-8 space-y-6">
+          <div className="text-center space-y-2">
+            <h2 className="text-2xl font-bold text-white">Let's Connect</h2>
+            <p className="text-sm text-slate-400 max-w-md mx-auto">
+              Send a direct message below—it saves to my database and sends an alert straight to my inbox!
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto text-left">
+            <div>
+              <label className="block text-xs font-semibold text-slate-300 mb-1">Your Name</label>
+              <input 
+                type="text" 
+                required 
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                className="w-full bg-slate-900/80 border border-slate-700/80 rounded-lg px-3.5 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition-colors"
+                placeholder="John Doe"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-slate-300 mb-1">Email Address</label>
+              <input 
+                type="email" 
+                required 
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                className="w-full bg-slate-900/80 border border-slate-700/80 rounded-lg px-3.5 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition-colors"
+                placeholder="john@example.com"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-slate-300 mb-1">Message</label>
+              <textarea 
+                rows="4" 
+                required 
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                className="w-full bg-slate-900/80 border border-slate-700/80 rounded-lg px-3.5 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition-colors resize-none"
+                placeholder="Write your message here..."
+              ></textarea>
+            </div>
+
+            <button 
+              type="submit" 
+              disabled={status === 'loading'}
+              className="w-full py-3 bg-indigo-600 hover:bg-indigo-500 disabled:bg-indigo-800 text-white font-medium text-sm rounded-lg transition-all shadow-lg shadow-indigo-600/20"
+            >
+              {status === 'loading' ? 'Sending...' : 'Send Message'}
+            </button>
+
+            {status === 'success' && (
+              <p className="text-xs text-emerald-400 text-center font-medium pt-2">
+                ✓ Message sent successfully! Check your inbox shortly.
+              </p>
+            )}
+            {status === 'error' && (
+              <p className="text-xs text-rose-400 text-center font-medium pt-2">
+                Failed to send. Please check your Vercel & Supabase API key configuration.
+              </p>
+            )}
+          </form>
+
+          <div className="pt-4 border-t border-slate-800/80 text-center">
+            <span className="inline-block text-xs font-mono bg-slate-900 text-slate-400 px-3 py-1.5 rounded-lg border border-slate-800">
               Location: Zambia
             </span>
           </div>
