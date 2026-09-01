@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import profilePic from '../profile.png'; // Imports root image file
+import profilePic from '../backimage.png'; // Imports root image file
 
 const PORTFOLIO_DATA = {
   name: "Cheran Muhone",
