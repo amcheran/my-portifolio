@@ -1,28 +1,33 @@
 import { Resend } from 'resend';
 import { createClient } from '@supabase/supabase-js';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-const supabase = (supabaseUrl && supabaseAnonKey) 
-  ? createClient(supabaseUrl, supabaseAnonKey) 
-  : null;
 
 export async function POST(request) {
   try {
     const { name, email, message } = await request.json();
 
-    // 1. Store message inside Supabase contact_messages table
-    if (supabase) {
-      await supabase.from('contact_messages').insert([{ name, email, message }]);
+    // 1. Insert into Supabase
+    if (!supabaseUrl || !supabaseAnonKey) {
+      console.error('Missing Supabase Environment Variables');
+    } else {
+      const supabase = createClient(supabaseUrl, supabaseAnonKey);
+      const { data, error: dbError } = await supabase
+        .from('contact_messages')
+        .insert([{ name, email, message }]);
+
+      if (dbError) {
+        console.error('Supabase Insert Error:', dbError.message);
+      }
     }
 
-    // 2. Dispatch real-time notification email
+    // 2. Send Email via Resend
     if (process.env.RESEND_API_KEY) {
+      const resend = new Resend(process.env.RESEND_API_KEY);
       await resend.emails.send({
         from: 'Portfolio Contact <onboarding@resend.dev>',
-        to: 'cheranmuhone362@gmail.com', // Replace with your personal email address
+        to: 'YOUR_PERSONAL_EMAIL@gmail.com', // Replace with your actual email
         subject: `New Portfolio Message from ${name}`,
         html: `
           <h2>New Contact Form Submission</h2>
@@ -38,7 +43,7 @@ export async function POST(request) {
 
     return Response.json({ success: true });
   } catch (error) {
-    console.error('Contact API Error:', error);
+    console.error('Contact API Exception:', error);
     return Response.json({ error: 'Failed to deliver message' }, { status: 500 });
   }
 }
