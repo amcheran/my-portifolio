@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react'
-import backImage from '../assets/backimage.png';
+import backImage from '../Assets/backimage.png';
 
 
 const PORTFOLIO_DATA = {
