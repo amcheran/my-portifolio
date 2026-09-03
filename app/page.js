@@ -109,7 +109,7 @@ export default function Home() {
         <section className="space-y-6 pt-4">
           <div className="relative w-28 h-28 sm:w-32 sm:h-32">
             <img 
-              src="/profile.png" 
+              src="/backimage.png" 
               alt={PORTFOLIO_DATA.name} 
               className="w-full h-full rounded-full object-cover border-2 border-indigo-500/50 shadow-xl shadow-indigo-500/10"
               onError={(e) => { e.currentTarget.style.display = 'none'; }}
